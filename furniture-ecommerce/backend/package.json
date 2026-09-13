@@ -1,7 +1,7 @@
 {
   "name": "furniture-ecommerce-backend",
   "version": "1.0.0",
-  "description": "MERN e-commerce backend (furniture store)",
+  "description": "MERN e-commerce backend for a furniture store",
   "main": "server.js",
   "type": "commonjs",
   "scripts": {
