@@ -1,5 +1,5 @@
 const express = require("express");
-const router = express.Router();
+
 const {
   initSSLCommerz,
   handleSuccess,
@@ -7,10 +7,18 @@ const {
   handleCancel,
   handleIPN,
 } = require("../controllers/paymentController");
+
 const { protect } = require("../middleware/authMiddleware");
 
+const router = express.Router();
+
+// Parse form-encoded gateway callbacks.
+router.use(express.urlencoded({ extended: false }));
+
+// Require authentication to initiate payment.
 router.post("/sslcommerz/init/:orderId", protect, initSSLCommerz);
-// SSLCommerz posts form data to these on redirect - no auth (gateway calls them)
+
+// Public gateway callbacks: no user authentication required.
 router.post("/sslcommerz/success/:orderId", handleSuccess);
 router.post("/sslcommerz/fail/:orderId", handleFail);
 router.post("/sslcommerz/cancel/:orderId", handleCancel);
