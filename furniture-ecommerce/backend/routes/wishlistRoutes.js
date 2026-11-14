@@ -1,9 +1,21 @@
 const express = require("express");
-const router = express.Router();
-const { getWishlist, toggleWishlist } = require("../controllers/wishlistController");
+
+const {
+  getWishlist,
+  toggleWishlist,
+} = require("../controllers/wishlistController");
+
 const { protect } = require("../middleware/authMiddleware");
 
-router.get("/", protect, getWishlist);
-router.put("/:productId", protect, toggleWishlist);
+const router = express.Router();
+
+// Require authentication for all wishlist routes.
+router.use(protect);
+
+// Get the current user's wishlist.
+router.get("/", getWishlist);
+
+// Add or remove a product from the current user's wishlist.
+router.put("/:productId", toggleWishlist);
 
 module.exports = router;
